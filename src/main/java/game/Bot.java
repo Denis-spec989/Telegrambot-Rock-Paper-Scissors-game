@@ -64,12 +64,12 @@ public class Bot {
             Long chatId = message.chat().id();
             String senderName = message.from().firstName();
             String senderChose = button.callbackData();
-
             Integer messageId = message.messageId();
+
             request = new EditMessageText(chatId, messageId, message.text()).replyMarkup(new InlineKeyboardMarkup(
-                            new InlineKeyboardButton("🗿").callbackData(String.format("%d %s %s %s", chatId, senderName, senderChose, "0")),
-                            new InlineKeyboardButton("🧻").callbackData(String.format("%d %s %s %s", chatId, senderName, senderChose, "1")),
-                            new InlineKeyboardButton("✂").callbackData(String.format("%d %s %s %s", chatId, senderName, senderChose, "2"))
+                            new InlineKeyboardButton("🗿").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "0",messageId)),
+                            new InlineKeyboardButton("🧻").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "1",messageId)),
+                            new InlineKeyboardButton("✂").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "2",messageId))
                     )
             );
 
@@ -85,6 +85,11 @@ public class Bot {
            else if( callbackQuery !=null)
         {
             String[] data = callbackQuery.data().split(" ");
+            if(data.length <4)
+            {
+                return;
+
+            }
             Long chatId =Long.parseLong(data[0]);
             String senderName = data[1];
             String senderChose = data[2];
@@ -102,12 +107,7 @@ public class Bot {
                 request = new SendMessage(chatId,String.format("%s (%s) was beaten by %s (%s)",senderName,senderChose,opponentName,opponentChose));
             }
         }
-        /*else
-            if(message != null)
-        {
-            long chatId = update.message().chat().id();
-            request = new SendMessage(chatId, "Hello!");
-        }*/
+
         if (request!=null) {
             bot.execute(request);
         }

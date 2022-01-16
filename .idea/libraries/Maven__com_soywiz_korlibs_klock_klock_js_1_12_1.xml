@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.soywiz.korlibs.klock:klock-js:1.12.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/soywiz/korlibs/klock/klock-js/1.12.1/klock-js-1.12.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/soywiz/korlibs/klock/klock-js/1.12.1/klock-js-1.12.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/soywiz/korlibs/klock/klock-js/1.12.1/klock-js-1.12.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bot {
-   private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
+    private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
     private final String PROCESSING_LABEL = "Processing...";
     private final static List<String> senderWins = new ArrayList<String>() {{
         add("02");
@@ -75,14 +75,14 @@ public class Bot {
 
 
         }
-       else if (inlineQuery!=null)
+        else if (inlineQuery!=null)
         {
             InlineQueryResultArticle rock = buildInlineButton("rock","\uD83D\uDDFF Rock","0");
             InlineQueryResultArticle paper = buildInlineButton("paper","\uD83E\uDDFB Paper","1");
             InlineQueryResultArticle scissors = buildInlineButton("scissors","✂ Scissors","2");
             request = new AnswerInlineQuery(inlineQuery.id(),rock,paper,scissors).cacheTime(1);
         }
-           else if( callbackQuery !=null)
+        else if( callbackQuery !=null)
         {
             String[] data = callbackQuery.data().split(" ");
             if(data.length <4)

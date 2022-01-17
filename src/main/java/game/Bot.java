@@ -21,9 +21,9 @@ public class Bot {
     private final TelegramBot bot = new TelegramBot(System.getenv("BOT_TOKEN"));
     private final String PROCESSING_LABEL = "Processing...";
     private final static List<String> senderWins = new ArrayList<String>() {{
-        add("02");
-        add("10");
-        add("21");
+        add("каменьножницы");
+        add("бумагакамень");
+        add("ножницыбумага");
     }};
     public void serve() {
         bot.setUpdatesListener(updates -> {
@@ -67,9 +67,9 @@ public class Bot {
             Integer messageId = message.messageId();
 
             request = new EditMessageText(chatId, messageId, message.text()).replyMarkup(new InlineKeyboardMarkup(
-                            new InlineKeyboardButton("🗿").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "0",messageId)),
-                            new InlineKeyboardButton("🧻").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "1",messageId)),
-                            new InlineKeyboardButton("✂").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "2",messageId))
+                            new InlineKeyboardButton("🗿").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "камень",messageId)),
+                            new InlineKeyboardButton("🧻").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "бумага",messageId)),
+                            new InlineKeyboardButton("✂").callbackData(String.format("%d %s %s %s %d", chatId, senderName, senderChose, "ножницы",messageId))
                     )
             );
 
@@ -77,9 +77,9 @@ public class Bot {
         }
         else if (inlineQuery!=null)
         {
-            InlineQueryResultArticle rock = buildInlineButton("rock","\uD83D\uDDFF Rock","0");
-            InlineQueryResultArticle paper = buildInlineButton("paper","\uD83E\uDDFB Paper","1");
-            InlineQueryResultArticle scissors = buildInlineButton("scissors","✂ Scissors","2");
+            InlineQueryResultArticle rock = buildInlineButton("rock","\uD83D\uDDFF Камень","камень");
+            InlineQueryResultArticle paper = buildInlineButton("paper","\uD83E\uDDFB Бумага","бумага");
+            InlineQueryResultArticle scissors = buildInlineButton("scissors","✂ Ножницы","ножницы");
             request = new AnswerInlineQuery(inlineQuery.id(),rock,paper,scissors).cacheTime(1);
         }
         else if( callbackQuery !=null)
@@ -97,14 +97,13 @@ public class Bot {
             String opponentName = callbackQuery.from().firstName();
             if(senderChose.equals(opponentChose))
             {
-                request = new SendMessage(chatId , "Nobody wins =(");
-
+                request = new SendMessage(chatId , String.format("%s (%s) - ничья - %s (%s)",opponentName,opponentChose,senderName,senderChose));
             } else if (senderWins.contains(senderChose+opponentChose))
             {
-                request = new SendMessage(chatId,String.format("%s (%s) was beaten by %s (%s)",opponentName,opponentChose,senderName,senderChose));
+                request = new SendMessage(chatId,String.format("%s (%s) - проиграл- %s (%s)",opponentName,opponentChose,senderName,senderChose));
             } else
             {
-                request = new SendMessage(chatId,String.format("%s (%s) was beaten by %s (%s)",senderName,senderChose,opponentName,opponentChose));
+                request = new SendMessage(chatId,String.format("%s (%s) - проиграл- %s (%s)",senderName,senderChose,opponentName,opponentChose));
             }
         }
 
@@ -114,6 +113,6 @@ public class Bot {
     }
 
     private InlineQueryResultArticle buildInlineButton(String id,String title , String callbackData) {
-        return new InlineQueryResultArticle(id, title, "I'm ready to fight").replyMarkup(new InlineKeyboardMarkup(new InlineKeyboardButton(PROCESSING_LABEL).callbackData(callbackData)));
+        return new InlineQueryResultArticle(id, title, "Я выбрал свой вариант, выбери ты свой").replyMarkup(new InlineKeyboardMarkup(new InlineKeyboardButton(PROCESSING_LABEL).callbackData(callbackData)));
     }
 }
